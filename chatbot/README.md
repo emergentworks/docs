@@ -65,6 +65,7 @@ The first part of the chatbot setup starts with setting up a flow in Zapier that
       - Wrap Request in Array: No
       - Unflatten: Yes
       - Basic Auth: use the Basic Auth key from Twilio 
+ 
  <img src="./img/webhook_form_chatbot_trigger.png" width="500">
 
   iii. Test the trigger to ensure the fields are correctly filled out and Twilio can be authenticated.<br>
