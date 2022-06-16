@@ -57,14 +57,14 @@ The first part of the chatbot setup starts with setting up a flow in Zapier that
   <img src="./img/chatbot_trigger_webhook.png" width="500">
 
   ii. Under the "Set up action" header, fill out the following fields:<br>
-      - URL: use the Twilio execution URL
-      - Payload Type: form
-      - Data
-        - For the To field: expand the "Run JavaScript in Code by Zapier" and select "Phone"
-        - For the From field: use the Twilio chatbot phone number
-      - Wrap Request in Array: No
-      - Unflatten: Yes
-      - Basic Auth: use the Basic Auth key from Twilio 
+      - URL: use the Twilio execution URL<br>
+      - Payload Type: form<br>
+      - Data<br>
+        - For the To field: expand the "Run JavaScript in Code by Zapier" and select "Phone"<br>
+        - For the From field: use the Twilio chatbot phone number<br>
+      - Wrap Request in Array: No<br>
+      - Unflatten: Yes<br>
+      - Basic Auth: use the Basic Auth key from Twilio<br>
  
  <img src="./img/webhook_form_chatbot_trigger.png" width="500">
 
