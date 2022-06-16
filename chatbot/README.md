@@ -27,13 +27,15 @@ The first part of the chatbot setup starts with setting up a flow in Zapier that
   <img src="./img/chatbot_trigger.png" width="500">
   
   ii. Under the "Set up trigger" header, set the Day of the Week and Time of Day to trigger the chatbot. Currently this is set as Monday at 8pm.<br>
-  <img src="./img/chatbot_trigger.png" width="500">
+  <img src="./img/setup_trigger_chatbot.png" width="500">
 
   iii. Test the trigger to ensure the fields are correctly filled out.<br>
-  <img src="./img/setup_trigger_chatbot.png" width="500">
+  <img src="./img/chatbot_trigger_test.png" width="500">
 
 4. The next step in setting up the chatbot trigger is configuring an Action. This particular Action queues up the list of phone numbers from the cohort to communicate with the Twilio attendance chatbot. Setting up this Action also has three steps.<br>
   i. Under the "Choose App & Event" header, set the the App & Event as "Code by Zapier" and "Run JavaScript".<br>
+  <img src="./img/run_js_chatbot_action.png" width="500">
+
   ii. Under the "Set up action" header, add an array of phone numbers from members of the mentorship cohort in the Code section. This should be formatted the following way:<br>
   ````
   output = [
@@ -43,10 +45,17 @@ The first part of the chatbot setup starts with setting up a flow in Zapier that
   ]
   ````
   Make sure you name the array `output = []` and each user's name should be wrapped in quotation marks. The phone number should be wrapped in quotation marks and start with +1 followed by the phone number without any spaces or dashes. Put a comma between each name/phone number pair.<br>
-  You do not need to add anything to the Input Data fields.
+
+  You do not need to add anything to the Input Data fields.<br>
+  <img src="./img/phone_num_array.png" width="500">
+
   iii. Test the trigger to ensure the fields are correctly filled out.<br>
+  <img src="./img/phone_num_array_test.png" width="500">
+
 5. The last step for setting up the chatbot trigger is configuring another Action. This Action sends a request to the Twilio chatbot to start sending out the chatbot attendance questions. It requires authentication, so you'll need the unique execution URL and token from Twilio. Directions on where to find Twilio credentials are [here](#where-to-find-twilio-credentials).Setting up this Action also has three steps.<br>
   i. Under the "Choose App & Event" header, set the the App & Event as "Webhooks by Zapier" and "POST".<br>
+  <img src="./img/chatbot_trigger_webhook.png" width="500">
+
   ii. Under the "Set up action" header, fill out the following fields:<br>
       - URL: use the Twilio execution URL
       - Payload Type: form
@@ -56,7 +65,10 @@ The first part of the chatbot setup starts with setting up a flow in Zapier that
       - Wrap Request in Array: No
       - Unflatten: Yes
       - Basic Auth: use the Basic Auth key from Twilio 
+ <img src="./img/webhook_form_chatbot_trigger.png" width="500">
+
   iii. Test the trigger to ensure the fields are correctly filled out and Twilio can be authenticated.<br>
+ <img src="./img/webhook_test_chatbot_trigger.png" width="500">
 
 ## Part 2: Twilio Setup
 
