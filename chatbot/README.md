@@ -1,13 +1,31 @@
 # EW Chatbot Docs
 
-Emergent Works uses a chatbot to track attendance for their virtual mentorship programs. This documents the setup and basic troubleshooting steps for the chatbot. Most of the setup is based on [this article](https://www.twilio.com/blog/2017/12/build-a-santa-bot.html) about creating a chatbot using Zapier/Twilio integration with the responses tracked in a Google Sheet.
+Emergent Works uses a chatbot to track attendance for their virtual mentorship programs. This documents the setup and basic troubleshooting steps for the chatbot. Most of the setup is based on [this article](https://www.twilio.com/blog/2017/12/build-a-santa-bot.html) about creating a chatbot using a Zapier/Twilio integration with the responses tracked in a Google Sheet.
 
-## Table of Contents (tk)
+For the most part, the chatbot should be ready to go -- all we need to do is switch it on when the cohorts start -- but this step-by-step guide should help if you want to understand what's going on at each step. The basic workflow is as follows:
+
+1. Zapier pings Twilio once a week at a specific time with a list of phone numbers to text.
+2. Twilio sends out texts to check in with participants about their attendance.
+3. Twilio pings Zapier again after a user submits their answers, and Zapier sends the answers to a Google Sheet.
+4. Answers from the chatbot are recorded in the Google sheet.
+
+If you want to set up a new chatbot, it should be fairly easy to duplicate (both Twilio and Zapier have the option to "clone" workflows).
+
+## Table of Contents
+- [Services Used](#services-used)
+- [Integration Flow](#integration-flow)
+    - [Part 1: Zapier Setup for Chatbot Trigger](#part-1-zapier-setup-for-chatbot-trigger)
+    - [Part 2: Twilio Setup](#part-2-twilio-setup)
+    - [Part 3: Zapier Setup for Google Sheet Records](part-3-zapier-setup-for-google-sheet-records)
+    - [Part 4: Google Sheet Setup](#part-4-google-sheet-setup)
+- [Where to Find Twilio Credentials](#where-to-find-twilio-credentials)
+- [Where to Add Zapier Webhook Links in Twilio](#where-to-add-zapier-webhook-links-in-twilio)
+- [How to Grant Zapier Access to Google Sheets](#how-to-grant-zapier-access-to-google-sheets)
 
 ## Services Used
-- Zapier
-- Twilio
-- Google Spreadsheets
+- [Zapier](https://zapier.com)
+- [Twilio](https://www.twilio.com/)
+- [Google Spreadsheets](https://www.google.com/sheets/about/)
 
 ## Integration flow
 
@@ -74,15 +92,28 @@ The first part of the chatbot setup starts with setting up a flow in Zapier that
 ## Part 2: Twilio Setup
 
 ## Part 3: Zapier Setup for Google Sheet Records
-After the mentees and mentors have texted with the chatbot, their responses are recorded in a Google Sheet. This section covers how the Zapier <> Google Sheet integration works, so the responses are appropriately recorded.
+After the mentees and mentors have texted with the chatbot, their responses are recorded in a Google Sheet. This Zap is triggered by Twilio: once a user submits all their answers to the chatbot, Twilio will ping Zapier with the feedback to post the responses to the Google sheet. This section covers how the Zapier <> Google Sheet integration works, so the responses are appropriately recorded.
 
-1. Log in to Zapier and go to the "Zaps" tab. Each program has a separate trigger for adding the chatbot responses to a Google sheet. The Google sheet response Zaps are usually named "[Program]: Add Feedback to Google Sheet".
-2. Clicking on the Zap name will bring you to the Zap's setup.
-3. Similarly to the chatbot trigger Zap, the Google sheet Zap is initialized with a "Trigger". Setting up the Trigger entails three steps.<br> 
+1. Log in to Zapier and go to the "Zaps" tab. Each program has a separate zap for adding the chatbot responses to a Google sheet. The Google sheet response zaps are usually named "[Program]: Add Feedback to Google Sheet".
+2. Clicking on the zap name will bring you to the zap's setup.
+3. Similarly to the chatbot trigger zap, the Google sheet zap is initialized with a "Trigger". This trigger will be hooked into when Twilio sends the chatbot responses back to Zapier. Setting up the Trigger entails three steps.<br> 
   i. Under the "Choose App & Event" header, set the the App & Event as "Webhooks by Zapier" and "Catch Hook".<br>
-  ii. Under the "Set up trigger" header, you don't need to fill anything out.<br>
+  ii. Under the "Set up trigger" header, you don't need to fill anything out (the trigger will come from Twilio). You will need to add the Zapier webhook URL to the Twilio chatbot, so Twilio knows which URL to send the responses to. Instructions for how to do this can be found [here](#where-to-add-zapier-webhook-links-in-twilio).<br>
   iii. Test the trigger to ensure the fields are correctly filled out.<br>
-4. 
+4. Next, there is a action to send the responses to the Google sheet. Setting up the action entails three steps:
+  i. Under the "Choose App & Event" header, set the the App & Event as "Google Sheets" and "Create a spreadsheet row".<br>
+  ii. Under "Choose account", select the Google account you want to authorize that will own the spreadsheet. Instructions for how to do this can be found [here](#how-to-grant-zapier-access-to-google-sheets).<br>
+  iii. Under "Set up action" fill out the form as follows:<br>
+      - Drive: can be blank<br>
+      - Spreadsheet: select the correct attendance spreadsheet for the cohort<br>
+      - Worksheet: since there are multiple tabs in most attendance spreadsheets, you'll want to select or create a tab in the spreadsheet that's labeled "Twilio_data"<br>
+      - Selecting the spreadsheet will create a form pre-populated a list of columns from the spreadsheet. Match the data with the corresponding column<br>
+          - Mentor: Mentor<br>
+          - Attended: Meet<br>
+          - How_was_it: Session Rating<br>
+          - Relationship: Relation Rating<br>
+          - Feedback: Feedback<br>
+  iii. Test the trigger to ensure the new row is added to the Google spreadsheet.<br>
 
 ## Part 4: Google Sheet Setup
 
