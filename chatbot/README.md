@@ -70,7 +70,7 @@ The first part of the chatbot setup starts with setting up a flow in Zapier that
   iii. Test the trigger to ensure the fields are correctly filled out.<br>
   <img src="./img/phone_num_array_test.png" width="500">
 
-5. The last step for setting up the chatbot trigger is configuring another Action. This Action sends a request to the Twilio chatbot to start sending out the chatbot attendance questions. It requires authentication, so you'll need the unique execution URL and token from Twilio. Directions on where to find Twilio credentials are [here](#where-to-find-twilio-credentials).Setting up this Action also has three steps.<br>
+5. The last step for setting up the chatbot trigger is configuring another Action. This Action sends a request to the Twilio chatbot to start sending out the chatbot attendance questions. It requires authentication, so you'll need the unique execution URL and token from Twilio. Directions on where to find Twilio credentials are [here](#where-to-find-twilio-credentials).  Setting up this Action also has three steps.<br>
   i. Under the "Choose App & Event" header, set the the App & Event as "Webhooks by Zapier" and "POST".<br>
   <img src="./img/chatbot_trigger_webhook.png" width="500">
 
@@ -89,6 +89,8 @@ The first part of the chatbot setup starts with setting up a flow in Zapier that
   iii. Test the trigger to ensure the fields are correctly filled out and Twilio can be authenticated.<br>
  <img src="./img/webhook_test_chatbot_trigger.png" width="500">
 
+ ** MAKE SURE THE ZAP IS TURNED ON ONCE YOU'RE READY TO START THE CHATBOT **
+
 ## Part 2: Twilio Setup
 
 ## Part 3: Zapier Setup for Google Sheet Records
@@ -96,13 +98,21 @@ After the mentees and mentors have texted with the chatbot, their responses are 
 
 1. Log in to Zapier and go to the "Zaps" tab. Each program has a separate zap for adding the chatbot responses to a Google sheet. The Google sheet response zaps are usually named "[Program]: Add Feedback to Google Sheet".
 2. Clicking on the zap name will bring you to the zap's setup.
+<img src="./img/zap_overview_spreadsheet.png" width="500">
+
 3. Similarly to the chatbot trigger zap, the Google sheet zap is initialized with a "Trigger". This trigger will be hooked into when Twilio sends the chatbot responses back to Zapier. Setting up the Trigger entails three steps.<br> 
   i. Under the "Choose App & Event" header, set the the App & Event as "Webhooks by Zapier" and "Catch Hook".<br>
+  <img src="./img/google_sheet_app_event.png" width="500">
+
   ii. Under the "Set up trigger" header, you don't need to fill anything out (the trigger will come from Twilio). You will need to add the Zapier webhook URL to the Twilio chatbot, so Twilio knows which URL to send the responses to. Instructions for how to do this can be found [here](#where-to-add-zapier-webhook-links-in-twilio).<br>
+  <img src="./img/google_sheet_action.png" width="500">
+
   iii. Test the trigger to ensure the fields are correctly filled out.<br>
+  <img src="./img/trigger_test_googlesheet.png" width="500">
+
 4. Next, there is a action to send the responses to the Google sheet. Setting up the action entails three steps:
   i. Under the "Choose App & Event" header, set the the App & Event as "Google Sheets" and "Create a spreadsheet row".<br>
-  ii. Under "Choose account", select the Google account you want to authorize that will own the spreadsheet. Instructions for how to do this can be found [here](#how-to-grant-zapier-access-to-google-sheets).<br>
+  ii. Under "Choose account", select the Google account you want to authorize that has access to the attendance spreadsheet. Instructions for how to do this can be found [here](#how-to-grant-zapier-access-to-google-sheets).<br>
   iii. Under "Set up action" fill out the form as follows:<br>
       - Drive: can be blank<br>
       - Spreadsheet: select the correct attendance spreadsheet for the cohort<br>
@@ -115,7 +125,18 @@ After the mentees and mentors have texted with the chatbot, their responses are 
           - Feedback: Feedback<br>
   iii. Test the trigger to ensure the new row is added to the Google spreadsheet.<br>
 
+** MAKE SURE THE ZAP IS TURNED ON ONCE YOU'RE READY TO START THE CHATBOT **
+
 ## Part 4: Google Sheet Setup
+The Google sheet for attendance is usually copied from previous cohorts, so there should be minimal setup needed for new cohorts. You can duplicate the Google sheet if you want a fresh copy, or you can add new tabs to the existing spreadsheet. Whether you decide to create a new sheet or use the existing sheet, there will need to be 3 main tabs:
+
+1. The Attendance tab: this tab will have a list of the mentor/mentee pairs with the start/end date of the pairing and a list of weeks where attendance is tracked.
+2. The Twilio_data tab: this tab will be the tab that's populated with the feedback from the chatbot each week. 
+- to get the "Name" column to populate, you'll need to copy/paste this formula into the cell for each row that has feedback data: `=VLOOKUP(INDIRECT("A" & ROW()),Names!$A$1:$B$100,2, FALSE)`. This looks up each mentor/mentee's name in the Names tab to pull in the right label. I'm not an excel whiz, so there might be a way to figure out how to apply this formula to the whole column, but I haven't been able to figure out how to do that. 
+- another nice-to-have for this spreadsheet would be figure out how to add a "Date Added" or "Date Modified" column, so we could see when the response came back from the chatbot. Right now it just keeps adding rows to the chatbot, so you sort of have to guess when the new entries start for each week.
+3. The Names tab: this is the tab the Twilio_data tab will reference when listing the names of the mentors/mentees. In column A, add the phone number of a mentor/mentee in the format `+15551234567`. Be sure there is a +1 followed by the phone number without any spaces. In the next column, write the mentor/mentee's name. The Twilio_data sheet will look up the phone number and use the matching name for the entries that are added.
+
+When you're working with the chatbot, the Twilio_data and the Names tab will be the ones you work with the most often. After the chatbot responses are added to the Twilio_data tab, another programs person will manually update the attendace list. Again, there's probably a way to automatically update the attendance sheet, too, but I'm not an excel expert & I'm not sure how to create a formula that would help the team skip the manual entry part.
 
 ## Where to Find Twilio Credentials
 
