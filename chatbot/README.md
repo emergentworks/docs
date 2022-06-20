@@ -92,6 +92,15 @@ The first part of the chatbot setup starts with setting up a flow in Zapier that
  ** MAKE SURE THE ZAP IS TURNED ON ONCE YOU'RE READY TO START THE CHATBOT **
 
 ## Part 2: Twilio Setup
+Twilio is the service that manages sending texts to the cohort once Zapier sends the signal to Twilio to start the chatbot. This section will cover the basics of setting up the chatbot flow in Twilio, but most of the details are covered [here](https://www.twilio.com/blog/2017/12/build-a-santa-bot.html). Additional how-to docs for creating new flows can be found on the Twilio website [here](https://www.twilio.com/docs/studio/user-guide/get-started#create-a-flow). Most of this should already be set up, or there should be an option to clone a Twilio flow if you'd like to add a new one, so you shouldn't have to start from scratch or modify the current chatbots at all. 
+
+If you're setting up a new chatbot, be aware that each chatbot needs its own designated phone number. Instructions for adding a new phone number to Twilio can be found (here)[].
+
+1. Log in to the Twilio dashboard and click on the Studio Flows section.
+2. Click on the Flow you want to edit or modify. Most flows are labeled as [**insert here**]
+
+2. Creating a question
+3. Sending the answers back to Zapier
 
 ## Part 3: Zapier Setup for Google Sheet Records
 After the mentees and mentors have texted with the chatbot, their responses are recorded in a Google Sheet. This Zap is triggered by Twilio: once a user submits all their answers to the chatbot, Twilio will ping Zapier with the feedback to post the responses to the Google sheet. This section covers how the Zapier <> Google Sheet integration works, so the responses are appropriately recorded.
@@ -123,7 +132,7 @@ After the mentees and mentors have texted with the chatbot, their responses are 
           - How_was_it: Session Rating<br>
           - Relationship: Relation Rating<br>
           - Feedback: Feedback<br>
-  iii. Test the trigger to ensure the new row is added to the Google spreadsheet.<br>
+  iv. Test the trigger to ensure the new row is added to the Google spreadsheet.<br>
 
 ** MAKE SURE THE ZAP IS TURNED ON ONCE YOU'RE READY TO START THE CHATBOT **
 
@@ -139,7 +148,21 @@ The Google sheet for attendance is usually copied from previous cohorts, so ther
 When you're working with the chatbot, the Twilio_data and the Names tab will be the ones you work with the most often. After the chatbot responses are added to the Twilio_data tab, another programs person will manually update the attendace list. Again, there's probably a way to automatically update the attendance sheet, too, but I'm not an excel expert & I'm not sure how to create a formula that would help the team skip the manual entry part.
 
 ## Where to Find Twilio Credentials
+There are various credentials from Twilio that need to be added to the Zapier setup in [step 5 part ii](#part-1-zapier-setup-for-chatbot-trigger) of the Zapier set up for triggering the Twilio chatbot. This allows for a secure connection between the two services. Here is a list of the credentials you will need and where to find them. 
 
 ## Where to Add Zapier Webhook Links in Twilio
+When you're working on [step #3 part ii](#part-3-zapier-setup-for-google-sheet-records) in the Zapier setup for Google sheets, you'll need to add a webhook URL to the Twilio setup so Twilio knows where to send the responses from the chatbot. When you click on the "Test Action" section, a box should come up with the label "Your Webhook URL."
+
+1. Copy the link from the URL field. It should looks like https://hooks.zapier.com/hooks/catch/12345
+2. Log in to Twilio and navigate to the chatbot flow you need to connect to Zapier
+3. 
 
 ## How to Grant Zapier Access to Google Sheets
+When you're working on [step #4 part ii](#part-3-zapier-setup-for-google-sheet-records) in the Zapier setup for Google sheets, you'll need to grant access for Zapier to read/write to Google sheets. This should already be set up, but if you're creating a new zap, you should be able to add access to Google sheets using these steps:
+
+1. From the home page dashboard, go to the "My Apps" option on the navigation.
+2. Click on "Google Sheets" or search for Google Sheets in the search box if it's not already listed.
+3. When the Google sheets detail page comes up, click "+Add Connection".
+4. A new browser window will pop up, prompting you to select a gmail account to use for the connection.
+5. Click on the email that has the Google sheets you'll want to access.
+6. Agree to allow Zapier to access your Google drive.
