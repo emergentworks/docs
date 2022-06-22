@@ -150,13 +150,14 @@ When you're working with the chatbot, the Twilio_data and the Names tab will be 
 ## Where to Find Twilio Credentials
 There are various credentials from Twilio that need to be added to the Zapier setup in [step 5 part ii](#part-1-zapier-setup-for-chatbot-trigger) of the Zapier set up for triggering the Twilio chatbot. This allows for a secure connection between the two services. Here is a list of the credentials you will need and where to find them. 
 
+** more instructions tk **
 
 ## Where to Add Zapier Webhook Links in Twilio
 When you're working on [step #3 part ii](#part-3-zapier-setup-for-google-sheet-records) in the Zapier setup for Google sheets, you'll need to add a webhook URL to the Twilio setup so Twilio knows where to send the responses from the chatbot. When you click on the "Test Action" section, a box should come up with the label "Your Webhook URL."
 
 1. Copy the link from the URL field. It should looks like https://hooks.zapier.com/hooks/catch/12345
 2. Log in to Twilio and navigate to the chatbot flow you need to connect to Zapier
-3. 
+3. ** more instructions tk **
 
 ## How to Grant Zapier Access to Google Sheets
 When you're working on [step #4 part ii](#part-3-zapier-setup-for-google-sheet-records) in the Zapier setup for Google sheets, you'll need to grant access for Zapier to read/write to Google sheets. This should already be set up, but if you're creating a new zap, you should be able to add access to Google sheets using these steps:
